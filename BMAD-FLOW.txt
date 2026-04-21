@@ -1,0 +1,329 @@
+Luồng BMAD Method từ A → Z
+                                                                                                         
+  PHASE 1: ANALYSIS (Phân tích)                                   
+
+  ┌─────────────────────────────────────────────────────┐
+  │  Bắt đầu ở đây — chọn 1 trong 2 đường              │
+  │                                                     │
+  │  Đường A (nhẹ nhàng):  /bmad-product-brief          │
+  │  Đường B (khắc nghiệt): /bmad-prfaq                 │
+  └────────────────┬────────────────────────────────────┘
+                   │
+      (tuỳ chọn trước/song song)
+                   │
+      /bmad-brainstorming    ← ideation nếu chưa có ý tưởng
+      /bmad-domain-research  ← nghiên cứu ngành
+      /bmad-market-research  ← nghiên cứu thị trường
+      /bmad-technical-research ← nghiên cứu kỹ thuật
+
+  Bước 1a — Brainstorming (tuỳ chọn)
+
+  User gõ:  /bmad-brainstorming
+  - Agent hỏi chủ đề, chọn kỹ thuật (SCAMPER, Mind Map, 6 Thinking Hats, v.v.)
+  - Output: tài liệu brainstorming trong _bmad-output/planning-artifacts/
+  - Dùng khi: chưa rõ ý tưởng, cần khám phá
+
+  Bước 1b — Research (tuỳ chọn, chạy song song được)
+
+  User gõ:  /bmad-domain-research
+  User gõ:  /bmad-market-research
+  User gõ:  /bmad-technical-research
+  - Mỗi lệnh tạo 1 báo cáo nghiên cứu chuyên sâu
+  - Output: research documents trong planning-artifacts/ hoặc docs/
+  - Dùng khi: cần data trước khi viết brief/PRFAQ
+
+  Bước 1c — Product Brief HOẶC PRFAQ (bắt buộc 1 trong 2)
+
+  Đường A:  /bmad-product-brief
+  Đường B:  /bmad-prfaq
+
+  ┌─────────┬───────────────────────────────────────────────┬───────────────────────────────────────┐
+  │         │                 Product Brief                 │                 PRFAQ                 │
+  ├─────────┼───────────────────────────────────────────────┼───────────────────────────────────────┤
+  │ Lệnh    │ /bmad-product-brief                           │ /bmad-prfaq                           │
+  ├─────────┼───────────────────────────────────────────────┼───────────────────────────────────────┤
+  │ Agent   │ Multi-agent (artifact-analyzer,               │ Multi-agent (artifact-analyzer,       │
+  │         │ opportunity-reviewer, skeptic-reviewer)       │ web-researcher)                       │
+  ├─────────┼───────────────────────────────────────────────┼───────────────────────────────────────┤
+  │ Phong   │ Guided, nhẹ nhàng, cho khi đã chắc ý tưởng    │ Working Backwards (Amazon-style),     │
+  │ cách    │                                               │ stress-test khắc nghiệt               │
+  ├─────────┼───────────────────────────────────────────────┼───────────────────────────────────────┤
+  │ Output  │ Product brief document                        │ Press release + Customer FAQ +        │
+  │         │                                               │ Internal FAQ + Verdict                │
+  └─────────┴───────────────────────────────────────────────┴───────────────────────────────────────┘
+
+  User trải qua multi-turn conversation, agent hỏi đào sâu, cuối cùng tạo document.
+
+  ---
+  PHASE 2: PLANNING (Lập kế hoạch)
+
+  Product Brief / PRFAQ
+           │
+           ▼
+    /bmad-create-prd          ← BẮT BUỘC
+           │
+           ▼
+    /bmad-validate-prd        ← khuyến nghị
+           │
+           ▼
+    /bmad-edit-prd             ← nếu validate phát hiện vấn đề
+           │
+           ▼
+    /bmad-create-ux-design     ← khuyến nghị nếu có UI
+
+  Bước 2a — Tạo PRD
+
+  User gõ:  /bmad-create-prd
+  - Agent: John (PM) — hỏi "WHY?" liên tục
+  - Workflow gồm 12 steps tuần tự: init → discovery → vision → executive summary → journeys → domain →
+  innovation → project type → scoping → functional → nonfunctional → polish → complete
+  - Mỗi step có menu, user chọn Continue để sang step tiếp
+  - Output: planning-artifacts/prd.md
+  - Đây là document bắt buộc, dài nhất trong pipeline
+
+  Bước 2b — Validate PRD
+
+  User gõ:  /bmad-validate-prd
+  - 13 validation steps: format detection → parity check → density → brief coverage → measurability →
+  traceability → implementation leakage → domain compliance → project type → SMART → holistic quality →
+  completeness → report
+  - Output: validation report với danh sách issues
+
+  Bước 2c — Edit PRD (nếu cần)
+
+  User gõ:  /bmad-edit-prd
+  - Đọc validation report, sửa PRD theo findings
+  - Output: updated PRD
+
+  Bước 2d — UX Design (tuỳ chọn, khuyến nghị cao nếu có UI)
+
+  User gõ:  /bmad-create-ux-design
+  - Agent: Sally (UX Designer)
+  - 14 steps: init → discovery → core experience → emotional response → inspiration → design system →
+  defining experience → visual foundation → design directions → user journeys → component strategy → UX
+  patterns → responsive/accessibility → complete
+  - Output: planning-artifacts/ux-design.md
+
+  ---
+  PHASE 3: SOLUTIONING (Giải pháp kỹ thuật)
+
+  PRD + UX Design
+         │
+         ▼
+  /bmad-create-architecture        ← BẮT BUỘC
+         │
+         ▼
+  /bmad-create-epics-and-stories   ← BẮT BUỘC
+         │
+         ▼
+  /bmad-check-implementation-readiness  ← khuyến nghị
+         │
+         ▼
+  /bmad-generate-project-context   ← khuyến nghị (brownfield)
+
+  Bước 3a — Architecture
+
+  User gõ:  /bmad-create-architecture
+  - Agent: Winston (Architect)
+  - 8 steps: init → context → starter → decisions → patterns → structure → validation → complete
+  - Output: planning-artifacts/architecture.md
+  - Bao gồm: tech stack, API design, database schema, deployment, ADRs
+
+  Bước 3b — Epics & Stories
+
+  User gõ:  /bmad-create-epics-and-stories
+  - 4 steps: validate prerequisites → design epics → create stories → final validation
+  - Đọc PRD + Architecture + UX → tách thành epics, mỗi epic có stories với acceptance criteria (BDD
+  format)
+  - Output: planning-artifacts/epics.md
+  - Đây là cầu nối giữa planning và implementation
+
+  Bước 3c — Check Readiness
+
+  User gõ:  /bmad-check-implementation-readiness
+  - 6 steps: document discovery → PRD analysis → epic coverage → UX alignment → epic quality → final
+  assessment
+  - Kiểm tra: PRD ↔ Architecture ↔ UX ↔ Epics có aligned không
+  - Output: readiness report — GO / NO-GO
+
+  Bước 3d — Project Context (cho brownfield)
+
+  User gõ:  /bmad-generate-project-context
+  - Scan codebase hiện tại, tạo project-context.md cho AI agents tham khảo
+  - Output: _bmad-output/project-context.md
+
+  ---
+  PHASE 4: IMPLEMENTATION (Triển khai)
+
+  Epics & Stories
+         │
+         ▼
+  /bmad-sprint-planning         ← BẮT BUỘC, chạy 1 lần
+         │
+         ▼
+  ┌──────────────────────────────────────────┐
+  │         STORY CYCLE (lặp cho mỗi story)  │
+  │                                          │
+  │  /bmad-create-story   ← tạo story file  │
+  │         │                                │
+  │         ▼                                │
+  │  /bmad-dev-story      ← implement code   │
+  │         │                                │
+  │         ▼                                │
+  │  /bmad-code-review    ← review code      │
+  │         │                                │
+  │    ┌────┴────┐                           │
+  │    │ PASS?   │                           │
+  │    │         │                           │
+  │   YES       NO → quay lại dev-story      │
+  │    │                                     │
+  │    ▼                                     │
+  │  (story done, next story)                │
+  │                                          │
+  └──────────────────────────────────────────┘
+         │
+         ▼ (khi hết epic)
+  /bmad-retrospective           ← tuỳ chọn
+
+  Bước 4a — Sprint Planning
+
+  User gõ:  /bmad-sprint-planning
+  - Đọc tất cả epic files, parse stories
+  - Tạo implementation-artifacts/sprint-status.yaml:
+  development_status:
+    epic-1: backlog
+    1-1-user-authentication: backlog
+    1-2-account-management: backlog
+    epic-1-retrospective: optional
+    epic-2: backlog
+    2-1-dashboard: backlog
+    ...
+  - Chạy 1 lần, sau đó các agent tự cập nhật file này
+
+  Bước 4b — Story Cycle (lặp)
+
+  Tạo story:
+  User gõ:  /bmad-create-story
+  - Tự tìm story backlog đầu tiên trong sprint-status.yaml
+  - Hoặc chỉ định: /bmad-create-story 2-3 (epic 2, story 3)
+  - Đọc epics + PRD + architecture + UX + previous story learnings + git history
+  - Tạo file implementation-artifacts/1-1-user-authentication.md với:
+    - User story + acceptance criteria
+    - Tasks/subtasks (checkboxes)
+    - Dev Notes (architecture guardrails, library versions, file structure)
+    - Previous story intelligence
+  - Cập nhật sprint-status: backlog → ready-for-dev
+
+  Validate story (tuỳ chọn):
+  User gõ:  /bmad-create-story validate
+  - Kiểm tra story file đã đủ context chưa
+
+  Implement story:
+  User gõ:  /bmad-dev-story
+  - Hoặc: /bmad-dev-story [path-to-story-file]
+  - Agent: Amelia (Developer)
+  - Tự tìm story ready-for-dev đầu tiên
+  - Thực thi red-green-refactor cho từng task:
+    a. Viết test FAIL (red)
+    b. Code tối thiểu để test PASS (green)
+    c. Refactor
+    d. Check checkbox [x] trong story file
+    e. Lặp cho task tiếp theo
+  - Cập nhật sprint-status: ready-for-dev → in-progress
+  - Khi tất cả tasks xong: in-progress → review
+  - Chạy liên tục không dừng cho đến khi hoàn thành hoặc HALT
+
+  Review code:
+  User gõ:  /bmad-code-review
+  - Spawn 3 reviewers song song:
+    a. Blind Hunter — chỉ thấy diff, không context → tìm bugs thuần túy
+    b. Edge Case Hunter — diff + project access → tìm edge cases
+    c. Acceptance Auditor — diff + spec + context → kiểm tra acceptance criteria
+  - Triage findings thành: MUST FIX / SHOULD FIX / CONSIDER / DISMISSED
+  - Nếu Approve → user cập nhật status thành done
+  - Nếu Changes Requested → ghi vào story file, user chạy lại /bmad-dev-story
+
+  Bước 4c — Retrospective (cuối mỗi epic)
+
+  User gõ:  /bmad-retrospective
+  - Review epic đã hoàn thành: what went well, what didn't, lessons learned
+  - Output: retrospective document
+
+  ---
+  TOOLS PHỤ TRỢ (dùng bất kỳ lúc nào)
+
+  /bmad-help                    ← "tôi nên làm gì tiếp?"
+  /bmad-sprint-status           ← xem trạng thái sprint hiện tại
+  /bmad-correct-course          ← thay đổi lớn giữa sprint
+  /bmad-checkpoint-preview      ← human review commit/PR
+  /bmad-qa-generate-e2e-tests   ← tạo E2E tests sau dev-story
+  /bmad-quick-dev               ← skip toàn bộ ceremony, code thẳng
+  /bmad-party-mode              ← thảo luận nhóm multi-agent
+  /bmad-document-project        ← document project brownfield
+  /bmad-distillator             ← nén document cho LLM
+  /bmad-shard-doc               ← tách document lớn >500 dòng
+  /bmad-editorial-review-prose  ← review văn phong
+  /bmad-editorial-review-structure ← review cấu trúc
+  /bmad-review-adversarial-general ← review phản biện
+  /bmad-review-edge-case-hunter ← tìm edge cases
+  /bmad-index-docs              ← tạo index cho thư mục docs
+  /bmad-advanced-elicitation    ← đào sâu (socratic, red team...)
+
+  ---
+  QUICK PATH — Bỏ ceremony, code thẳng
+
+  User gõ:  /bmad-quick-dev
+  - 5 steps: clarify & route → plan → implement → review → present
+  - Nhận intent từ user → tự plan → tự code → tự review → trình bày
+  - Dùng khi: bug fix nhanh, feature nhỏ, tweak, không cần full pipeline
+
+  ---
+  BẢNG TÓM TẮT LUỒNG ĐẦY ĐỦ
+
+  ┌─────┬────────────────┬──────────────────────────────────────┬───────────────┬────────────────────┐
+  │  #  │     Phase      │                 Lệnh                 │   Bắt buộc?   │       Output       │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 1   │ Analysis       │ /bmad-brainstorming                  │ Tuỳ chọn      │ brainstorming doc  │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 2   │ Analysis       │ /bmad-domain-research                │ Tuỳ chọn      │ research report    │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 3   │ Analysis       │ /bmad-market-research                │ Tuỳ chọn      │ research report    │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 4   │ Analysis       │ /bmad-technical-research             │ Tuỳ chọn      │ research report    │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 5   │ Analysis       │ /bmad-product-brief HOẶC /bmad-prfaq │ 1 trong 2     │ brief / PRFAQ      │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 6   │ Planning       │ /bmad-create-prd                     │ Bắt buộc      │ prd.md             │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 7   │ Planning       │ /bmad-validate-prd                   │ Khuyến nghị   │ validation report  │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 8   │ Planning       │ /bmad-edit-prd                       │ Nếu cần sửa   │ updated prd.md     │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 9   │ Planning       │ /bmad-create-ux-design               │ Nếu có UI     │ ux-design.md       │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 10  │ Solutioning    │ /bmad-create-architecture            │ Bắt buộc      │ architecture.md    │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 11  │ Solutioning    │ /bmad-create-epics-and-stories       │ Bắt buộc      │ epics.md           │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 12  │ Solutioning    │ /bmad-check-implementation-readiness │ Khuyến nghị   │ readiness report   │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 13  │ Solutioning    │ /bmad-generate-project-context       │ Brownfield    │ project-context.md │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 14  │ Implementation │ /bmad-sprint-planning                │ Bắt buộc      │ sprint-status.yaml │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 15  │ Implementation │ /bmad-create-story                   │ Lặp/story     │ story-file.md      │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 16  │ Implementation │ /bmad-dev-story                      │ Lặp/story     │ code + tests       │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 17  │ Implementation │ /bmad-code-review                    │ Lặp/story     │ review findings    │
+  ├─────┼────────────────┼──────────────────────────────────────┼───────────────┼────────────────────┤
+  │ 18  │ Implementation │ /bmad-retrospective                  │ Tuỳ chọn/epic │ retrospective doc  │
+  └─────┴────────────────┴──────────────────────────────────────┴───────────────┴────────────────────┘
+
+  Minimum viable path (ít ceremony nhất):
+  /bmad-product-brief → /bmad-create-prd → /bmad-create-architecture
+  → /bmad-create-epics-and-stories → /bmad-sprint-planning
+  → [/bmad-create-story → /bmad-dev-story → /bmad-code-review] × N stories
+
+  Shortest path (không ceremony):
+  /bmad-quick-dev

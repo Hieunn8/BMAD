@@ -1,0 +1,127 @@
+ Flow Gas Town — từ plan đến merged PR                                                                                                     
+                                                                                                                                            
+  Bước 0. Setup (1 lần, đã xong)                                                                                                            
+                                                                                                                                            
+  - Container chạy ✓                                                                                                                        
+  - config.json với role mapping ✓                                                                                                          
+  - 3 CLI login ✓                                                                                                                           
+                                                                                                                                            
+  Bước 1. Đăng ký rig (1 lần/project) — tay                                                                                                 
+
+  gt rig add gastown /workspace/gastown
+
+  Rig = 1 repo. Mỗi project muốn Gas Town làm việc phải rig add. Rig được lưu trong rigs.json.
+
+  Bước 2. Khởi Mayor — tay (chỉ khi chưa chạy)
+
+  gt mayor attach          # attach vào session hiện tại
+  # hoặc
+  gt mayor restart         # restart nếu đang kẹt
+
+  Sau khi attach, bạn đối thoại trực tiếp với Mayor (Claude Opus). Mayor là "tổng chỉ huy" — nó phân tích plan, decompose thành beads, giao
+  polecat.
+
+  Bước 3. Nạp plan vào Mayor — tay (3 cách)
+
+  Cách A — Paste plan trong chat Mayor (đơn giản nhất):
+  # trong Mayor chat:
+  Đây là plan: <paste markdown>
+  Hãy decompose thành convoy và stage cho polecat làm.
+
+  Mayor sẽ:
+  1. Tạo convoy (hq-cv-*)
+  2. Sinh beads cho từng task (<rig>-*) với dep graph
+  3. Gọi gt convoy stage + gt sling
+
+  Cách B — Import plan dưới dạng file:
+  gt convoy create --rig gastown --title "Feature X" --plan plan.md
+  gt convoy stage <convoy-id>
+  gt sling
+
+  Cách C — Tạo bead tay (kiểm soát chi tiết):
+  bd create "Task 1" --rig gastown --acceptance "..."
+  bd dep add <t2> blocks <t1>
+  gt sling
+
+  Bước 4. Chạy autonomous — auto
+
+  Sau khi gt sling, flow tự động chạy:
+
+  Mayor             → compute ready front (Kahn's algo) trên DAG beads
+    ↓
+  Polecat x N       → spawn worktree, claim bead, implement (GPT-5-Codex)
+    ↓ (heartbeat)
+  Witness           → scan tiến độ, detect stuck (Gemini)
+    ↓ (khi polecat done)
+  Refinery          → gate check, rebase, merge PR (Claude Sonnet)
+    ↓
+  Mayor             → nhận signal done, dispatch wave tiếp theo
+
+  Quota kiểm soát bằng scheduler.max_polecats=2 (chỉ 2 polecat chạy song song).
+
+  Bước 5. Monitor — tay (tùy chọn)
+
+  gt status --watch         # dashboard real-time
+  gt mail inbox             # mail đến Mayor/bạn
+  gt convoy list            # convoy nào đang chạy
+  bd list --status open     # bead còn open
+  gt hook                   # hook (công việc gắn worktree)
+
+  Dashboard web ở http://localhost:8080 (cổng 8080 đã expose trong compose).
+
+  Bước 6. Khi nào Gas Town cần bạn (interrupt) — tay
+
+  Gas Town sẽ dừng lại và đợi bạn chỉ khi:
+
+  ┌──────────────────────────────┬────────────────────────────┬─────────────────────────────────────┐
+  │          Tình huống          │           Ai gửi           │              Phản hồi               │
+  ├──────────────────────────────┼────────────────────────────┼─────────────────────────────────────┤
+  │ Requirement ambiguous        │ Mayor escalate qua gt mail │ Trả lời trong Mayor chat            │
+  ├──────────────────────────────┼────────────────────────────┼─────────────────────────────────────┤
+  │ Polecat stuck >45m           │ Deacon escalate            │ gt polecat kick <id> hoặc retake    │
+  ├──────────────────────────────┼────────────────────────────┼─────────────────────────────────────┤
+  │ PR cần human review          │ Refinery chờ approve       │ gt refinery approve <pr>            │
+  ├──────────────────────────────┼────────────────────────────┼─────────────────────────────────────┤
+  │ Conflict merge không tự giải │ Refinery escalate          │ Giải tay, commit, gt refinery retry │
+  ├──────────────────────────────┼────────────────────────────┼─────────────────────────────────────┤
+  │ Boot phát hiện daemon chết   │ Boot restart auto          │ — (tự xử)                           │
+  └──────────────────────────────┴────────────────────────────┴─────────────────────────────────────┘
+
+  ---
+  Auto hoàn toàn được không?
+
+  Được — NẾU plan thoả 3 điều kiện:
+
+  1. Bead có acceptance criteria rõ ràng — polecat biết khi nào "done". Ví dụ: "khi go test ./... pass và golangci-lint sạch".
+  2. Dep graph đúng — blocks/waits-for khớp thứ tự tự nhiên. Sai dep → wave stuck.
+  3. Scope bounded — mỗi bead 1 file/module, tránh task mơ hồ kiểu "làm cho nó chạy".
+
+  Gas Town hỗ trợ Mayor sinh plan đúng format: bạn chỉ cần đưa 1 markdown PRD, Mayor sẽ tự:
+  - Tạo acceptance criteria
+  - Lên dep graph
+  - Split bead theo kích thước ≤1 polecat turn
+
+  Nếu plan của bạn mơ hồ, Mayor sẽ chat hỏi lại trước khi stage — đây là lúc bạn review.
+
+  ---
+  Workflow thực tế khuyến nghị
+
+  Lần đầu một feature:
+  1. gt mayor attach
+  2. Paste PRD vào chat
+  3. Đọc plan Mayor đề xuất, chỉnh bead nếu cần
+  4. "OK, chạy đi" → Mayor sling
+  5. Đi làm việc khác. gt status --watch ở 1 tab.
+  6. Quay lại khi có mail/escalation.
+
+  Feature nhỏ (1 convoy <10 bead): auto 100% khả thi. Plan 5 dòng là đủ.
+
+  Feature lớn (50+ bead, nhiều module): Mayor sẽ sinh 3–5 convoy con. Nên review dep graph trước khi sling — gt convoy dag <id> in ra DAG
+  ASCII.
+
+  Muốn thử luôn? Đơn giản nhất:
+
+  docker compose exec -it gastown zsh
+  gt rig add gastown /workspace/gastown
+  gt mayor attach
+  # rồi paste 1 plan nhỏ
