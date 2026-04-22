@@ -1,6 +1,6 @@
 # Story 4.1: Resume an Interrupted Job from the Last Stable Checkpoint
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -69,8 +69,32 @@ so that tôi không phải làm lại từ đầu sau crash hoặc mất điện
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- cargo check --message-format short
+- cargo test
+- npm run build
+- npm test
 
 ### Completion Notes List
 
+- Added recent job discovery from `{app_data}/jobs` via `list_jobs`.
+- Added resume-safe `load_job` that restores manifest, per-video state files, and segment payload files.
+- Interrupted `Processing` jobs now snap back to `ReadyToRun`; interrupted `Exporting` videos snap back to `ReadyToExport`.
+- Added Start screen recent jobs UI plus `Tiep tuc` and `Tao job moi`.
+- Added store hydration/reset flow so resumed jobs reopen in the correct screen.
+
 ### File List
+
+- src-tauri/src/services/persistence_service.rs
+- src-tauri/src/services/job_orchestrator.rs
+- src-tauri/src/commands/job_commands.rs
+- src-tauri/src/lib.rs
+- src/store/jobStore.ts
+- src/modules/start-flow/types.ts
+- src/modules/start-flow/StartScreen.tsx
+- src/modules/start-flow/JobListItem.tsx
+- src/modules/app-shell/AppShell.tsx
+- src/styles.css

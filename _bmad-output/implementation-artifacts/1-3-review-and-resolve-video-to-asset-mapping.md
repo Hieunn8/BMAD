@@ -1,6 +1,6 @@
 # Story 1.3: Review and Resolve Video-to-Asset Mapping
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -72,8 +72,34 @@ so that mỗi video có đúng logo, audio, và SRT cần thiết trước khi c
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `npm test`
+- `npm run build`
+- `cargo test`
+- `cargo check --message-format short`
 
 ### Completion Notes List
 
+- Da them `auto_map_job` va `fix_mapping` command o Tauri, emit `mappingUpdated` va `inputFileReplacedAfterReview`, va persist mapping vao `job.json`.
+- Da implement auto-mapping exact base filename match cho audio/SRT, case-insensitive tren Windows, khong tu chon ngau nhien khi co nhieu match.
+- Da them Job Setup screen voi bang mapping, badge status, inline picker cho logo/audio/SRT, va warning khi thay input sau khi da co review data.
+- Da mo rong Zustand store de dong bo `currentJob`, `importedFiles`, `selectedTask`, va `mappingRows` cho man hinh review.
+- Da sua blocker lam mat per-video logo override khi remount/man hinh load lai; auto-map gio chi gan logo preset neu video chua co logo mapping.
+
 ### File List
+
+- `src-tauri/src/services/mapping_service.rs`
+- `src-tauri/src/commands/mapping_commands.rs`
+- `src-tauri/src/commands/mod.rs`
+- `src-tauri/src/lib.rs`
+- `src/modules/job-review/JobSetupScreen.tsx`
+- `src/modules/job-review/MappingTable.tsx`
+- `src/modules/job-review/InlinePicker.tsx`
+- `src/modules/job-review/index.ts`
+- `src/modules/app-shell/AppShell.tsx`
+- `src/modules/start-flow/types.ts`
+- `src/store/jobStore.ts`
+- `src/styles.css`

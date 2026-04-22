@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-21
-last_updated: 2026-04-21
+last_updated: 2026-04-22
 project: Desktop Video Rebranding App
 project_key: NOKEY
 tracking_system: file-system
@@ -46,43 +46,43 @@ development_status:
   # Epic 1: Prepare Job and Map Assets
   # ─────────────────────────────────────────────
   epic-1: in-progress
-  1-0-set-up-initial-project-structure-and-development-environment: ready-for-dev
-  1-1-import-videos-and-assets-into-a-new-job: ready-for-dev
-  1-2-select-and-apply-a-brand-preset: ready-for-dev
-  1-3-review-and-resolve-video-to-asset-mapping: ready-for-dev
-  1-4-validate-job-readiness-before-processing: ready-for-dev
-  1-5-manage-brand-presets: ready-for-dev
+  1-0-set-up-initial-project-structure-and-development-environment: done
+  1-1-import-videos-and-assets-into-a-new-job: done
+  1-2-select-and-apply-a-brand-preset: done
+  1-3-review-and-resolve-video-to-asset-mapping: done
+  1-4-validate-job-readiness-before-processing: done
+  1-5-manage-brand-presets: done
   epic-1-retrospective: optional
 
   # ─────────────────────────────────────────────
   # Epic 2: Run Automated Rebranding
   # ─────────────────────────────────────────────
   epic-2: in-progress
-  2-1-start-batch-processing-for-a-valid-job: ready-for-dev
-  2-2-replace-audio-for-each-video: ready-for-dev
-  2-3-detect-and-replace-logo: ready-for-dev
-  2-4-remove-old-hardcoded-subtitle-and-render-new-subtitle: ready-for-dev
-  2-5-persist-processing-status-and-flags: ready-for-dev
+  2-1-start-batch-processing-for-a-valid-job: done
+  2-2-replace-audio-for-each-video: done
+  2-3-detect-and-replace-logo: done
+  2-4-remove-old-hardcoded-subtitle-and-render-new-subtitle: done
+  2-5-persist-processing-status-and-flags: done
   epic-2-retrospective: optional
 
   # ─────────────────────────────────────────────
   # Epic 3: Review Exceptions and Apply Targeted Fixes
   # ─────────────────────────────────────────────
-  epic-3: in-progress
-  3-1-open-a-review-workspace-for-flagged-videos: ready-for-dev
-  3-2-prioritize-and-filter-exception-segments: ready-for-dev
-  3-3-preview-before-and-after-for-a-selected-segment: ready-for-dev
-  3-4-apply-quick-fixes-to-logo-issues: ready-for-dev
-  3-5-apply-quick-fixes-to-subtitle-issues: ready-for-dev
-  3-6-resolve-review-gating-and-mark-video-ready: ready-for-dev
+  epic-3: done
+  3-1-open-a-review-workspace-for-flagged-videos: done
+  3-2-prioritize-and-filter-exception-segments: done
+  3-3-preview-before-and-after-for-a-selected-segment: done
+  3-4-apply-quick-fixes-to-logo-issues: done
+  3-5-apply-quick-fixes-to-subtitle-issues: done
+  3-6-resolve-review-gating-and-mark-video-ready: done
   epic-3-retrospective: optional
 
   # ─────────────────────────────────────────────
   # Epic 4: Export Deliverables and Recover Jobs
   # ─────────────────────────────────────────────
-  epic-4: in-progress
-  4-1-resume-an-interrupted-job-from-the-last-stable-checkpoint: ready-for-dev
-  4-2-validate-export-readiness-for-batch-output: ready-for-dev
-  4-3-export-all-ready-videos-to-mp4: ready-for-dev
-  4-4-persist-per-video-export-outcome-and-summary-report: ready-for-dev
+  epic-4: done
+  4-1-resume-an-interrupted-job-from-the-last-stable-checkpoint: done
+  4-2-validate-export-readiness-for-batch-output: done
+  4-3-export-all-ready-videos-to-mp4: done
+  4-4-persist-per-video-export-outcome-and-summary-report: done
   epic-4-retrospective: optional

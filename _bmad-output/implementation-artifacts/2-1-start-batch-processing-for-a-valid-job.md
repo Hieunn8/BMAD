@@ -1,6 +1,6 @@
 # Story 2.1: Start Batch Processing for a Valid Job
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -65,8 +65,31 @@ so that hệ thống có thể bắt đầu xử lý hàng loạt các video mà
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `npm test`
+- `npm run build`
+- `cargo test`
+- `cargo check --message-format short`
 
 ### Completion Notes List
 
+- Da them `start_job` command voi server-side readiness re-validation, idempotent no-op khi job dang `Processing`, va persist transition sang `Processing`.
+- Da implement queue runner nen trong `job_orchestrator` bang `tauri::async_runtime::spawn`, xu ly video tuan tu va tra ve command ngay lap tuc de UI khong bi block.
+- Da emit `jobStarted`, `jobUpdated`, `videoProcessingStarted`, `videoProcessingCompleted` de frontend dong bo trang thai theo lifecycle.
+- Da them `ProcessingQueueScreen` va noi nut `Chay tu dong` tu Job Setup sang flow xu ly nen dua tren `currentJob.status`.
+
 ### File List
+
+- `src-tauri/Cargo.toml`
+- `src-tauri/src/services/job_orchestrator.rs`
+- `src-tauri/src/commands/job_commands.rs`
+- `src-tauri/src/lib.rs`
+- `src/modules/job-review/JobSetupScreen.tsx`
+- `src/modules/processing-queue/ProcessingQueueScreen.tsx`
+- `src/modules/processing-queue/index.ts`
+- `src/modules/app-shell/AppShell.tsx`
+- `src/modules/start-flow/types.ts`
+- `src/styles.css`

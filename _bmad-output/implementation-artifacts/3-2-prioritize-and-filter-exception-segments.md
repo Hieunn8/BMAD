@@ -1,6 +1,6 @@
 # Story 3.2: Prioritize and Filter Exception Segments
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -57,8 +57,26 @@ so that tôi có thể xử lý đúng các vấn đề nghiêm trọng nhất t
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `cargo check --message-format short`
+- `cargo test`
+- `npm run build`
+- `npm test`
 
 ### Completion Notes List
 
+- Da them `FilterBar` va `SegmentList` de sort client-side theo `High -> Medium -> Low`, roi theo `startMs`.
+- Da them bo loc ket hop theo `riskLevel`, `issueType`, `reviewStatus` va giu filter state trong `reviewStore`.
+- Da them row UI cho segment: time range, issue type, risk badge, review status, message.
+- Da them chon segment + checkbox + `Shift+Click` range selection, dat nen cho bulk fix o Story 3.4/3.5.
+- Da them empty state khi khong co segment khop bo loc hien tai.
+
 ### File List
+
+- `src/modules/segment-review/FilterBar.tsx`
+- `src/modules/segment-review/SegmentList.tsx`
+- `src/store/reviewStore.ts`
+- `src/modules/start-flow/types.ts`

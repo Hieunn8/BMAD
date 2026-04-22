@@ -1,6 +1,6 @@
 # Story 3.3: Preview Before and After for a Selected Segment
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

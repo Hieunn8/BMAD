@@ -1,6 +1,6 @@
 # Story 3.6: Resolve Review Gating and Mark Video Ready
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

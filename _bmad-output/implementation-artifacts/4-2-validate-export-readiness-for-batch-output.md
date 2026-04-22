@@ -1,6 +1,6 @@
 # Story 4.2: Validate Export Readiness for Batch Output
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -63,8 +63,37 @@ so that tôi không vô tình xuất các video chưa vượt qua đúng các ru
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- cargo check --message-format short
+- cargo test
+- npm run build
+- npm test
 
 ### Completion Notes List
 
+- Added export readiness backend that classifies ready vs blocked videos using persisted `VideoItem.status` from disk.
+- Added export screen with ready/blocked lists, preset summary, audio summary, and output folder picker.
+- Added persisted `exportOutputFolder` on job state with validation to avoid writing into source video folders.
+- Added export store and AppShell navigation for `ReadyToExport`.
+- Review pass fixed export-screen navigation so user can return to review workspace instead of being auto-reopened into export immediately.
+
 ### File List
+
+- src-tauri/src/domain/job.rs
+- src-tauri/src/services/export_service.rs
+- src-tauri/src/commands/export_commands.rs
+- src-tauri/src/services/mod.rs
+- src-tauri/src/commands/mod.rs
+- src-tauri/src/lib.rs
+- src/store/exportStore.ts
+- src/modules/export-reporting/ExportScreen.tsx
+- src/modules/export-reporting/ExportReadinessList.tsx
+- src/modules/export-reporting/index.ts
+- src/modules/segment-review/SegmentReviewScreen.tsx
+- src/modules/app-shell/AppShell.tsx
+- src/modules/start-flow/types.ts
+- src/modules/start-flow/StartScreen.tsx
+- src/styles.css

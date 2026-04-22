@@ -1,6 +1,6 @@
 # Story 1.4: Validate Job Readiness Before Processing
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -63,8 +63,30 @@ so that tôi chỉ có thể bấm xử lý khi mọi blocker bắt buộc đã 
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `npm test`
+- `npm run build`
+- `cargo test`
+- `cargo check --message-format short`
 
 ### Completion Notes List
 
+- Da them `JobOrchestrator::validate_readiness` o backend va `get_job_readiness` command de validate readiness theo `selectedTask`.
+- Da expose readiness state qua Zustand va refresh readiness reactively sau khi auto-map hoac fix mapping.
+- Da mo rong `MappingTable` de hien Ready/Blocked badge, danh sach blockers per-video, va thong diep job-level khi con video bi block.
+- Da them gating cho nut `Chay tu dong`; nut chi enable khi toan bo job da san sang.
+
 ### File List
+
+- `src-tauri/src/services/job_orchestrator.rs`
+- `src-tauri/src/commands/job_commands.rs`
+- `src-tauri/src/services/mapping_service.rs`
+- `src-tauri/src/lib.rs`
+- `src/modules/job-review/JobSetupScreen.tsx`
+- `src/modules/job-review/MappingTable.tsx`
+- `src/modules/start-flow/types.ts`
+- `src/store/jobStore.ts`
+- `src/styles.css`

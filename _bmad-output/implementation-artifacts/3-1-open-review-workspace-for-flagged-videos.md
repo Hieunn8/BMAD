@@ -1,6 +1,6 @@
 # Story 3.1: Open a Review Workspace for Flagged Videos
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -65,8 +65,34 @@ so that tôi đi thẳng vào các video và segment thực sự cần xác nh�
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `cargo check --message-format short`
+- `cargo test`
+- `npm run build`
+- `npm test`
 
 ### Completion Notes List
 
+- Da them `review_commands.rs` voi `get_review_context` va `get_video_preview`, expose vao Tauri invoke handler.
+- Da them `review_service.rs` de load video state, segment artifacts logo/subtitle, va resolve preview working file uu tien cao nhat.
+- Da them `reviewStore` de cache review context theo video, selected state, preview path, va co the mo/dong review workspace.
+- Da them `SegmentReviewScreen` voi 3 cot, `VideoList`, `PreviewWorkspace`, placeholder Quick Fix Panel, timeline marker, va toggle hien thi tat ca video.
+- Da noi AppShell/JobSetup/ProcessingQueue de auto/open review workspace cho `ReviewPending` va spot-check `ReadyToExport`.
+
 ### File List
+
+- `src-tauri/src/commands/review_commands.rs`
+- `src-tauri/src/services/review_service.rs`
+- `src-tauri/src/lib.rs`
+- `src/store/reviewStore.ts`
+- `src/modules/segment-review/SegmentReviewScreen.tsx`
+- `src/modules/segment-review/VideoList.tsx`
+- `src/modules/segment-review/PreviewWorkspace.tsx`
+- `src/modules/app-shell/AppShell.tsx`
+- `src/modules/job-review/JobSetupScreen.tsx`
+- `src/modules/processing-queue/ProcessingQueueScreen.tsx`
+- `src/modules/start-flow/types.ts`
+- `src/styles.css`

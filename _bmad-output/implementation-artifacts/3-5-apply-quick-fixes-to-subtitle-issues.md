@@ -1,6 +1,6 @@
 # Story 3.5: Apply Quick Fixes to Subtitle Issues
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

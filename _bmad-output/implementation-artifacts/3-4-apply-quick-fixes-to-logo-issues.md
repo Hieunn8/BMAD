@@ -1,6 +1,6 @@
 # Story 3.4: Apply Quick Fixes to Logo Issues
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

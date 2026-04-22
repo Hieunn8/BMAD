@@ -1,6 +1,6 @@
 # Story 1.5: Manage Brand Presets (Create, Edit, Duplicate)
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -68,8 +68,30 @@ so that tôi có thể quản lý nhiều bộ cấu hình thương hiệu mà k
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `npm test`
+- `npm run build`
+- `cargo test`
+- `cargo check --message-format short`
 
 ### Completion Notes List
 
+- Da them `create_preset`, `edit_preset`, `duplicate_preset` command o Tauri va luu preset tai `{app_data}/presets/{presetId}.json`.
+- Da them warning khi sua preset dang gan voi current job da co review data; user phai xac nhan truoc khi luu.
+- Da them `PresetForm` dung chung cho create/edit, noi vao `PresetSelectionScreen`, va refresh danh sach preset sau CRUD/duplicate.
+- Da normalize preset cu sang audio/export options moi de form edit khong bi lech gia tri select.
+- Da thay `Default Logo` text input bang native file picker qua `tauri-plugin-dialog` va validate backend chi nhan `.png/.jpg/.jpeg/.svg`.
+
 ### File List
+
+- `src-tauri/src/services/preset_service.rs`
+- `src-tauri/src/commands/preset_commands.rs`
+- `src-tauri/src/lib.rs`
+- `src/modules/preset-management/PresetForm.tsx`
+- `src/modules/preset-management/PresetSelectionScreen.tsx`
+- `src/modules/preset-management/index.ts`
+- `src/modules/start-flow/types.ts`
+- `src/styles.css`

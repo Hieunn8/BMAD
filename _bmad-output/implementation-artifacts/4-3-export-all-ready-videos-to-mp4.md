@@ -1,6 +1,6 @@
 # Story 4.3: Export All Ready Videos to MP4
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -88,8 +88,32 @@ so that tôi có thể lấy output cuối cùng cho vận hành mà không ph�
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- cargo check --message-format short
+- cargo test
+- npm run build
+- npm test
 
 ### Completion Notes List
 
+- Added `start_export` Tauri command and async export queue that only picks videos currently in `ReadyToExport`.
+- Added per-video export status transitions `Exporting -> Exported / Failed` with persisted `videos/{videoId}.json` checkpoints and isolated failure handling.
+- Added FFmpeg MP4 export pipeline with `libx264`, `aac`, `-preset slow`, CRF derived from preset, output naming `{videoId}_{original}_rebranded.mp4`, and progress parsing via `-progress pipe:1`.
+- Reused persisted review segment state to rebuild logo/subtitle adjustments for export when quick-fix data exists, while falling back to latest working intermediate files when no rebuild is needed.
+- Added export progress events `videoExportStarted`, `exportProgress`, `videoExportCompleted`, and `batchExportCompleted`.
+- Added export UI progress tracking with per-video progress bars, overall batch summary, and AppShell handling so the export screen stays open through `Exporting` and final export statuses.
+- Self-review pass found no remaining blocker after wiring job status updates and export-flow navigation.
+
 ### File List
+
+- src-tauri/src/services/export_service.rs
+- src-tauri/src/commands/export_commands.rs
+- src-tauri/src/lib.rs
+- src/modules/export-reporting/ExportScreen.tsx
+- src/modules/export-reporting/ExportReadinessList.tsx
+- src/store/exportStore.ts
+- src/modules/app-shell/AppShell.tsx
+- src/modules/start-flow/types.ts

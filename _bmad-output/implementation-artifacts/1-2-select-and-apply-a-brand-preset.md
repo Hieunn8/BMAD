@@ -1,55 +1,53 @@
 # Story 1.2: Select and Apply a Brand Preset
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
 As a user,
-I want chọn một preset theo brand/channel cho job,
-so that hệ thống có thể áp dụng default brand rules trước khi tôi xác nhận mapping và readiness.
+I want chon mot preset theo brand/channel cho job,
+so that he thong co the ap dung default brand rules truoc khi toi xac nhan mapping va readiness.
 
 ## Acceptance Criteria
 
-1. Màn Preset Selection hiển thị ít nhất: brand name, logo mặc định, audio policy, subtitle style preset, export preset cho preset đang chọn.
-2. Khi preset được áp dụng: lưu vào job state và cập nhật các default brand settings.
-3. Khi đổi preset sau khi job đã có mapping hoặc review data: hiển thị cảnh báo rằng mapping hoặc kết quả detect trước đó có thể mất hiệu lực.
+1. Man Preset Selection hien thi it nhat: brand name, logo mac dinh, audio policy, subtitle style preset, export preset cho preset dang chon.
+2. Khi preset duoc ap dung: luu vao job state va cap nhat cac default brand settings.
+3. Khi doi preset sau khi job da co mapping hoac review data: hien thi canh bao rang mapping hoac ket qua detect truoc do co the mat hieu luc.
 
 ## Tasks / Subtasks
 
-- [ ] Tạo Preset Selection screen trong `preset-management` module (AC: 1)
-  - [ ] Danh sách preset bên trái (list với brand name)
-  - [ ] Preset preview card bên phải: brand name, logo thumbnail, audio policy label, subtitle style name, export preset name, notes
-  - [ ] Actions: "Chọn preset này", "Sửa preset", "Tạo preset mới"
-- [ ] Implement `select_preset` Tauri command (AC: 2)
-  - [ ] Gán presetId vào current job
-  - [ ] Resolve preset assets: defaultLogoPath, audioReplacementPolicy, subtitleStylePreset, layoutRules, exportPreset
-  - [ ] Persist updated job state (presetId) vào job.json
-  - [ ] Trả về full preset data cho frontend
-- [ ] Detect preset change warning (AC: 3)
-  - [ ] Check nếu job đã có segment flags hoặc review data
-  - [ ] Nếu có: hiển thị warning inline trước khi apply: "Đổi preset có thể làm mất hiệu lực các chỉnh sửa trước đó"
-  - [ ] User phải confirm để tiếp tục
-- [ ] Implement preset data persistence (AC: 2)
-  - [ ] Preset domain model: `src-tauri/src/domain/preset.rs` với các fields: presetId, brandName, defaultLogoPath, audioReplacementPolicy, subtitleStylePreset, layoutRules, exportPreset
-  - [ ] Presets lưu tách biệt: `{app_data}/presets/{presetId}.json` (không lưu trong job folder)
-- [ ] Cập nhật Zustand store (AC: 2)
-  - [ ] `jobStore.setPreset(preset)` — lưu full preset object vào state
-  - [ ] Downstream components (mapping, rendering) đọc preset từ store
+- [x] Tao Preset Selection screen trong `preset-management` module (AC: 1)
+  - [x] Danh sach preset ben trai (list voi brand name)
+  - [x] Preset preview card ben phai: brand name, logo thumbnail, audio policy label, subtitle style name, export preset name, notes
+  - [x] Actions: "Chon preset nay", "Sua preset", "Tao preset moi"
+- [x] Implement `select_preset` Tauri command (AC: 2)
+  - [x] Gan `presetId` vao current job
+  - [x] Resolve preset assets: `defaultLogoPath`, `audioReplacementPolicy`, `subtitleStylePreset`, `layoutRules`, `exportPreset`
+  - [x] Persist updated job state (`presetId`) vao `job.json`
+  - [x] Tra ve full preset data cho frontend
+- [x] Detect preset change warning (AC: 3)
+  - [x] Check neu job da co segment flags hoac review data
+  - [x] Neu co: hien thi warning inline truoc khi apply
+  - [x] User phai confirm de tiep tuc
+- [x] Implement preset data persistence (AC: 2)
+  - [x] Preset domain model: `src-tauri/src/domain/preset.rs`
+  - [x] Presets luu tach biet tai `{app_data}/presets/{presetId}.json`
+- [x] Cap nhat Zustand store (AC: 2)
+  - [x] `jobStore.setPreset(preset)` luu full preset object vao state
+  - [x] Downstream components co the doc preset tu store
 
 ## Dev Notes
 
-- **Preset hiểu như "gói thương hiệu"** không phải config kỹ thuật — UX phải thể hiện điều này. Brand name và logo là điều user thấy đầu tiên.
-- **Preset storage**: tách riêng khỏi job (`app_data/presets/`), vì một preset có thể được dùng bởi nhiều jobs.
-- **Audio replacement policy** trong preset xác định: có thay audio không, file audio mặc định nào (nếu có). Audio policy service đọc từ preset.
-- **Warning timing**: cảnh báo chỉ hiện khi job ĐÃ có segment flags hoặc review data — không hiện ở lần chọn preset đầu tiên.
-- **No modal overload**: warning là inline message, không phải popup/dialog. User xác nhận qua một action rõ ràng.
-- Logic check "đã có review data" phải kiểm tra `segments/{videoId}.json` tồn tại và có content.
+- Preset duoc the hien nhu goi thuong hieu, khong phai config ky thuat thuan tuy.
+- Preset storage tach rieng khoi job o `app_data/presets/` de co the tai su dung cho nhieu jobs.
+- Warning chi hien khi preset change co nguy co lam stale data downstream trong `videos/` hoac `segments/`.
+- UX dung inline warning va explicit confirm button, khong mo popup/dialog.
 
 ### Project Structure Notes
 
 - Frontend: `src/modules/preset-management/PresetSelectionScreen.tsx`, `src/modules/preset-management/PresetCard.tsx`
-- Backend: `src-tauri/src/commands/preset_commands.rs` (select_preset), `src-tauri/src/services/preset_service.rs`, `src-tauri/src/domain/preset.rs`
-- Store: `src/store/jobStore.ts` (setPreset action)
+- Backend: `src-tauri/src/commands/preset_commands.rs`, `src-tauri/src/services/preset_service.rs`, `src-tauri/src/domain/preset.rs`
+- Store: `src/store/jobStore.ts`
 
 ### References
 
@@ -64,8 +62,35 @@ so that hệ thống có thể áp dụng default brand rules trước khi tôi 
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- `npm test`
+- `npm run build`
+- `cargo test`
+- `cargo check --message-format short`
 
 ### Completion Notes List
 
+- Da them preset domain/service/commands o Rust, seed 3 preset mac dinh vao `{app_data}/presets`, va persist `presetId` vao `job.json` khi apply.
+- Da them preset warning flow: backend kiem tra `videos/` hoac `segments/` co file hay khong; frontend hien thi warning inline va yeu cau confirm truoc khi doi preset.
+- Da render `PresetSelectionScreen` va `PresetCard` trong app shell sau khi draft job ton tai, gom preset list, preview details, va action controls.
+- Da mo rong `jobStore` de luu full preset object cho downstream components.
+
 ### File List
+
+- `src/modules/preset-management/PresetSelectionScreen.tsx`
+- `src/modules/preset-management/PresetCard.tsx`
+- `src/modules/preset-management/index.ts`
+- `src/modules/start-flow/types.ts`
+- `src/modules/app-shell/AppShell.tsx`
+- `src/store/jobStore.ts`
+- `src/styles.css`
+- `src-tauri/src/domain/preset.rs`
+- `src-tauri/src/domain/mod.rs`
+- `src-tauri/src/commands/preset_commands.rs`
+- `src-tauri/src/commands/mod.rs`
+- `src-tauri/src/services/preset_service.rs`
+- `src-tauri/src/constants.rs`
+- `src-tauri/src/lib.rs`

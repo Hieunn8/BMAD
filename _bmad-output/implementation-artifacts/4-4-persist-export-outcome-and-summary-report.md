@@ -1,6 +1,6 @@
 # Story 4.4: Persist Per-Video Export Outcome and Summary Report
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -77,8 +77,36 @@ so that tôi và QC có đủ thông tin để tin output mà không phải xem 
 
 ### Agent Model Used
 
+GPT-5 Codex
+
 ### Debug Log References
+
+- cargo check --message-format short
+- cargo test
+- npm run build
+- npm test
 
 ### Completion Notes List
 
+- Extended persisted `videos/{videoId}.json` state with export outcome fields: audio source, output path, and encode summary.
+- Added auto-generated immutable per-video reports and persisted batch export summary under `{job}/reports/`.
+- Added spot-check thumbnail generation for up to 3 prioritized segments using before/after frame extraction.
+- Added `generate_video_report`, `get_report`, and `get_job_export_summary_report` Tauri commands.
+- Added report UI in export flow with per-video cards, encode/audio/segment stats, thumbnail pairs, and jump-back-to-review action for the selected video.
+- Auto-generated reports are created after each export completion; failures in report generation are logged but do not fail the export batch.
+- Self-review pass found no remaining blocker after wiring persisted summary load on export screen.
+
 ### File List
+
+- src-tauri/src/services/export_service.rs
+- src-tauri/src/services/persistence_service.rs
+- src-tauri/src/services/review_service.rs
+- src-tauri/src/commands/export_commands.rs
+- src-tauri/src/lib.rs
+- src/modules/export-reporting/ExportScreen.tsx
+- src/modules/export-reporting/ExportReadinessList.tsx
+- src/modules/export-reporting/ReportScreen.tsx
+- src/modules/export-reporting/VideoReportCard.tsx
+- src/modules/export-reporting/index.ts
+- src/store/exportStore.ts
+- src/modules/start-flow/types.ts
